@@ -16,20 +16,15 @@
 // ------------------------
 
 const arrInc = (arr) => {
-    let result = [];
-    let sum = 0;
-    for (let i = 0; i < arr.length; i++) {
-sum = i + 10;
-        result.push(arr[sum]);
-      }
-      
-      // after
-      arr.forEach(function(arr){
-        result.push(arr);
-      })
-    // write your code here
-    return result;
+  let result = [];
+
+  arr.forEach(element => {
+      result.push(element + 10)
+  }
+  )
+  return result;
 }
+
 
 
 // 2) ---------------------
@@ -41,19 +36,15 @@ sum = i + 10;
 // 
 // ------------------------
 const roundDecimals = (arr) => {
-    // write your code here
- let aroundArr = [];
- let round = 0
- for (let i=0; i<=arr.length; i++)
- {
-round= Math.round(arr[i]);
+  let roundresult = [];
 
-aroundArr.push (arr);
- }
- arr.forEach(function(arr){
-    aroundArr.push(arr);
+  arr.forEach(item => {
+
+    roundresult.push(Math.round(item))
   })
-  return aroundArr;
+
+  return roundresult;
+}
 
 // 3) ---------------------
 // 
@@ -120,7 +111,16 @@ aroundArr.push (arr);
 
 // ------------------------
 const employeesBonus = (arr) => {
-    // write your code here
+  arr.forEach(item => {
+      if (item.workHours > 8) {
+          item.salary= Number(item.salary.replace('$', ''))+100;
+          item.salary =`${item.salary}$`
+      } else {
+          item.salary= Number(item.salary.replace('$', ''))+50;
+          item.salary =`${item.salary}$`
+      }
+  })
+  return arr;
 }
 
 // 4) ---------------------
@@ -138,7 +138,22 @@ const employeesBonus = (arr) => {
 // ==> 200
 // ------------------------
 const mostExpensive = (budget, mouseArray, keyBoardArray) => {
-    // write your code here
+  let priceArray =[]
+mouseArray.forEach(mousprice=>{
+  keyBoardArray.forEach(keyBoardPrice =>{
+      if(mousprice + keyBoardPrice <= budget){
+          priceArray.push(mousprice+keyBoardPrice)
+      }
+  })
+})
+
+let mostExpensive =0;
+priceArray.forEach(sum =>{
+  if(sum > mostExpensive){
+    mostExpensive =sum;
+  }
+})
+return mostExpensive;
 }
 
 module.exports = { arrInc, roundDecimals, employeesBonus, mostExpensive }
