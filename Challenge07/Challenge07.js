@@ -109,7 +109,7 @@ const cvFormatter = (arr) => {
         }
     })
     deleteitem.forEach(index => {arr.splice(index , 1)})
-        //to insert a new item
+n
     return arr;
 };
 
