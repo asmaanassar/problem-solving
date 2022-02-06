@@ -19,15 +19,10 @@
 // ------------------------
 
 const objLat = (obj) => {
-    const str1 = `${obj.firstName}`;
-    const str2 = str1.charAt(0).toUpperCase() + str1.slice(1);
-    const str3 = `${obj.lastName}`;
-    const str4 = str3.charAt(0).toUpperCase() + str3.slice(1);
-
-    let fn =`my name is ${obj.str2} ${obj.str4} I am ${obj.age} YO, and I love ${obj.hobby}.`;
-    
-    return fn;
-}
+    let firstName = obj.firstName.charAt(0).toUpperCase()+ obj.firstName.slice(1);
+    let lastName = obj.lastName.charAt(0).toUpperCase()+ obj.lastName.slice(1);
+    return `my name is ${firstName + ' ' + lastName} I am ${obj.age} YO, and I love ${obj.hobby}.`
+};
 
 
 // 2) ---------------------
@@ -93,25 +88,30 @@ const objLat = (obj) => {
 
 
 
-function cvFormatter(arr) {
-    const arr1 =[{fullName: "Jason James",tech: "JS"},
-           { fullName: "Shira",tech: ".Net"},
-           {fullName: "Isabella",
-          tech: "Java"}];
-    const arr2 =[20, 5, 1, 7];
-    let n1= arr1.length;
-    let n2= arr2.length;
-    let m = arr1[0];
- for (let i=0; i<= n1;i++)
- {
-    if(arr2[i]>1)
-    {
-      m=arr1[i];
-
-    }
-    return m;
- }
-}
+const cvFormatter = (arr) => {
+    let deleteitem = [];
+    arr.forEach((item, index) => {
+        if (item.yearsOfExperience > 1){
+            if(item.firstName === null || item.lastName === null){
+                if (!item.firstName){
+                    item['fullName'] = item.lastName;
+                }else{
+                    item['fullName'] = item.firstName
+                }
+            }else{
+                item['fullName'] = item.firstName + ' ' + item.lastName;
+            }
+            delete item.lastName
+            delete item.firstName
+            delete item.yearsOfExperience
+        }else {
+            deleteitem.push(index)
+        }
+    })
+    deleteitem.forEach(index => {arr.splice(index , 1)})
+        //to insert a new item
+    return arr;
+};
 
 // 3) ---------------------
 //
@@ -133,17 +133,38 @@ function cvFormatter(arr) {
 //  1- rejectedApplicants are applications that has both the names empty or null and whoever have less than one year of Experience
 
 // ------------------------
-const arr4=[{python_Devs: 0},
-            {javaScript_Devs: 0},
-            { dotNet_Devs: 0},
-            {java_Devs: 0},
-            {totalApplicants: 0},
-            { rejectedApplicants: 0}
-]
-const applicationsStatics = (arr4) => {
-return arr4;
-    // write your code here
+const applicationsStatics = (arr) => {
+    let counter = 0;
+    let result = {
+        python_Devs: 0,
+        javaScript_Devs: 0,
+        dotNet_Devs: 0,
+        java_Devs: 0,
+        totalApplicants: 0,
+        rejectedApplicants: 0,
+    }
+    arr.forEach((item) => {
+        if (item.yearsOfExperience < 1 || !item.firstName || !item.lastName){
+            result.rejectedApplicants+= 1;
+        }
+        if (item.tech === 'Python'){
+            result.python_Devs+= 1;
+            counter++;
+        }else if (item.tech === 'JS'){
+            result.javaScript_Devs += 1;
+            counter++;
+        }else if (item.tech === '.Net'){
+            result.dotNet_Devs += 1;
+            counter++;
+        }else if (item.tech === 'Java'){
+            result.java_Devs+= 1;
+            counter++;
+        }
+    });
+    result.totalApplicants = counter;
+    return result;
 };
+
 
 // 4) ---------------------
 //
@@ -267,77 +288,11 @@ let data = {
 //  2- You need to round the average to the nearest lower number 
 
 const classesAvg = (data) => {
-    let Rdata= [Rfirst[{classNumber: "01",classScores: [89, 87, 45, 48, 89, 65, 21, 54, 78, 62, 51, 54, 50, 49]},
-     {classNumber: "02", classScores: [87, 54, 95, 45, 41, 51, 25, 63, 58, 47, 64, 51, 98, 100]},
-    {classNumber: "03", classScores: [74, 85, 20, 51, 59, 58, 62, 71, 74, 99, 84, 71, 38, 70]}],
-Rsecond[{classNumber: "01", classScores:[71, 82, 86, 3, 1, 52, 91, 84, 44, 68, 64, 23, 80, 60,]},
-       {classNumber: "01",classScores: [71, 82, 86, 3, 1, 52, 91, 84, 44, 68, 64, 23, 80, 60,]}],
-    Rthird[{classNumber: "01",classScores: [11, 12, 28, 78, 57, 3, 54, 72, 14, 19, 88, 74, 68, 58]},
-    {classNumber: "02",classScores: [62, 8, 35, 43, 96, 9, 97, 73, 4, 32, 18, 81, 70, 42]}],
-    Rfour[{classNumber: "01",classScores: [63, 71, 93, 87, 83, 85, 67, 49, 62, 45, 38, 48, 58, 52]},
-    {classNumber: "02",classScores: [100, 45, 70, 75, 87, 63, 39, 46, 54, 68, 74, 96, 52, 49]},
-    {classNumber: "03",classScores: [97, 54, 80, 95, 69, 31, 88, 84, 50, 81, 67, 34, 41, 87]},
-    {classNumber: "04", classScores: [64, 96, 66, 38, 78, 58, 43, 100, 34, 56, 82, 53, 89, 72]}]];
-
-    let ln1 = classScores[89, 87, 45, 48, 89, 65, 21, 54, 78, 62, 51, 54, 50, 49];
-    let n1=ln1.length;
-    let ln2 = classScores[87, 54, 95, 45, 41, 51, 25, 63, 58, 47, 64, 51, 98, 100];
-    let n2=ln2.length;
-    let ln3 = classScores[74, 85, 20, 51, 59, 58, 62, 71, 74, 99, 84, 71, 38, 70];
-    let n3=ln3.length;
-    let ln4 = classScores[71, 82, 86, 3, 1, 52, 91, 84, 44, 68, 64, 23, 80, 60];
-    let n4=ln4.length;
-    let ln5 = classScores[71, 82, 86, 3, 1, 52, 91, 84, 44, 68, 64, 23, 80, 60];
-    let n5=ln5.length;
-    let ln6 = classScores[11, 12, 28, 78, 57, 3, 54, 72, 14, 19, 88, 74, 68, 58];
-    let n6=ln6.length;
-    let ln7 = classScores[62, 8, 35, 43, 96, 9, 97, 73, 4, 32, 18, 81, 70, 42];
-    let n7=ln7.length;
-    let ln8 = classScores[63, 71, 93, 87, 83, 85, 67, 49, 62, 45, 38, 48, 58, 52];
-    let n8=ln8.length;
-    let ln9 = classScores[100, 45, 70, 75, 87, 63, 39, 46, 54, 68, 74, 96, 52, 49];
-    let n9=ln9.length;
-    let ln10 = classScores[97, 54, 80, 95, 69, 31, 88, 84, 50, 81, 67, 34, 41, 87];
-    let n10=ln10.length;
-    let ln11 = classScores[64, 96, 66, 38, 78, 58, 43, 100, 34, 56, 82, 53, 89, 72]
-    let n11=ln11.length;
-    let sum1=0;
-    let avg1=0;
-    let sum2=0;
-    let avg2=0;
-    let sum3=0;
-    let avg3=0;
-    let sum4=0;
-    let avg4=0;
-
-    for(let i=0; i<=ln1&ln2&ln3; i++)
-    { sum1=ln1[i]+ln2[i]+ln3[i];
-
-    }
-     avg1=sum/3;
-
-     for(let i=0; i<=ln4&ln5; i++)
-    { sum2=ln4[i]+ln5[i];
-
-    }
-     avg2=sum2/2;
-
-     for(let i=0; i<=ln6&ln7; i++)
-    { sum3=ln6[i]+ln7[i];
-
-    }
-
-     avg3=sum3/2;
-
-     for(let i=0; i<=ln8&ln9&ln10&ln11; i++)
-    { sum4=ln8[i]+ln9[i]+ln10[i]+ln11[];
-
-    }
-
-     avg4=sum4/4;
-
-
-return avg1, avg2, avg3, avg4;
-}
-
+    data.grades.forEach(grade => {
+        grade.classes.forEach(classNum => {
+            classNum.avg = Math.floor((classNum.classScores.reduce((a, b) => a + b, 0))/classNum.classScores.length);
+        });
+    });
+    return data;
+};
 module.exports = { objLat, cvFormatter, applicationsStatics, classesAvg };
