@@ -27,9 +27,11 @@
 // -------------------------------------------------------------------------------------------------------
 
 const customerAndAge = (obj) => {
-  for (const property in obj) {
-    console.log(`${property}: ${object[property]}`);}
-  // write your code here
+  var array = [];
+  for (const value in obj) {
+      array.push(`Customer Name :${value} , Age :${obj[value]}`);
+  }
+  return array;
 };
 
 // -------------------------------------------------------------------------------------------------------
@@ -55,14 +57,18 @@ const customerAndAge = (obj) => {
 
 // -------------------------------------------------------------------------------------------------------
 
+const getRecipeKey = (recipe) => {
+  let array = [];
+  for (const property in recipe) {
+      array.push(`${property}: ${recipe[property]}`);
+  }
+  return array;
+};
+
 const getEntries = (obj) => {
-  const getRecipeKey= obj.getEntries(recipeInfo);
-  console.log(getRecipeKey);
-  // write your code here
-  getRecipeKey.forEach((getRecipeKey, index) => {
-    console.log(`${getRecipeKey}: ${courses[getRecipeKey]}`);
-  }  
-  )};
+  return getRecipeKey(obj)
+};
+  
 
 // -------------------------------------------------------------------------------------------------------
 // Challenge 03
@@ -100,18 +106,20 @@ const courses = [
 ];
 
 const getInfo = (arr) => {
-   
-  getInfo.prototype.getCourseName=function()
-  {
-    
-  let coursesName = ['Java','JavaScript','Python', 'DotNet'];
-  let studentsName = [['Lincoln', 'Ruth', 'Briana', 'Suzy', 'Greta'], ['Alphonso', 'Daley', 'Dax', 'Karter', 'Jorja'],
-['Barney', 'Kalé', 'Alisha'],['Oli', 'Gisselle', 'Pru']];
-  
-  // write your code here
+  let coursesName = [];
+  let studentsName = [];
+
+
+  for(const item in courses){
+    for(const item2 in courses[item].Students){
+      studentsName.push(`${courses[item].Students[item2]}`)
+
+    }
+  coursesName.push(`${courses[item].course}`)
+ // studentsName.push(`${courses[key].Students}`)
+}
 
   return { coursesName, studentsName };
-  }
 };
 
 //  ------------------------------------------------------------------------------------------------------
